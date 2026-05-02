@@ -2,8 +2,6 @@
 
 > A clean, modern **Learning Management System** interface for MIU (Mohi-ud-Din Islamic University) — built with **Next.js** to help students view academic profile, courses, grades, and reports in one place.
 
-[![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
-
 ---
 
 ## 🎯 What is this project?
