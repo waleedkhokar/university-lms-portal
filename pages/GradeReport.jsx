@@ -125,6 +125,15 @@ const semesters = [
 export default function GrandReport() {
   return (
     <div className="max-w-7xl mx-auto p-6 bg-white rounded-xl my-10 font-sans text-gray-900 shadow-lg">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap gap-2">
+          {[1, 2, 3, 4, 5, 6, 7].map((n) => (
+            <a key={n} href={`#sem-${n}`} className="px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-sm hover:bg-gray-200">Sem {n}</a>
+          ))}
+        </div>
+        <button onClick={() => window.print()} className="px-4 py-2 rounded-lg text-white text-sm font-semibold" style={{ backgroundColor: '#007B66' }}>Print Report</button>
+      </div>
+
       {/* Header */}
       <header className="flex flex-col md:flex-row justify-between items-center mb-8 border-b border-gray-300 pb-4">
         <div className="mb-4 md:mb-0">
@@ -135,10 +144,9 @@ export default function GrandReport() {
         <div className="flex items-center space-x-8">
           <div className="text-right text-sm leading-snug">
             <p><strong>Reg.No:</strong> 22-APH-27426</p>
-            <p><strong>CNIC:</strong> 82303-0530433-3</p>
           </div>
           <div className="w-24 h-24 relative border border-gray-300 rounded-md overflow-hidden">
-            <Image src="/logo.jpg" alt="MIU Logo" fill style={{ objectFit: "contain" }} />
+            <Image src="/miu-logo.png" alt="MIU Logo" fill style={{ objectFit: "contain" }} />
           </div>
         </div>
       </header>
@@ -146,7 +154,7 @@ export default function GrandReport() {
       {/* Student Info */}
       <section className="mb-10 grid grid-cols-1 md:grid-cols-2 gap-6 border p-6 rounded-lg bg-gray-50">
         <div className="space-y-1">
-          <p><strong>Name:</strong> Waleed Hussain</p>
+          <p><strong>Name:</strong> Waleed Khokhar</p>
           <p><strong>Session:</strong> 2022-26</p>
           <p><strong>Father's Name:</strong> Sadaqat Hussain</p>
           <p><strong>Date Of Birth:</strong> 26-Jul-2004</p>
@@ -161,7 +169,7 @@ export default function GrandReport() {
 
       {/* Semesters */}
       {semesters.map(({ title, dateRange, semesterNumber, courses, sgpa, cgpa, status, creditHours }, i) => (
-        <section key={i} className="mb-12">
+        <section key={i} id={`sem-${i + 1}`} className="mb-12">
           <h2 className="text-2xl font-semibold mb-2">{title} <span className="text-gray-600 text-sm font-normal">{dateRange}</span> <span className="ml-3 text-gray-700 font-normal">{semesterNumber}</span></h2>
 
           <table className="w-full border-collapse border border-gray-300 text-base">

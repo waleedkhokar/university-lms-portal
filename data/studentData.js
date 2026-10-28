@@ -1,5 +1,5 @@
 export const studentData = {
-  name: "Waleed Hussain",
+  name: "Waleed Khokhar",
   regNo: "22-APH-27426",
   rollNo: "27426",
   program: "Bachelor of Science (Computer Science) BS (CS)",

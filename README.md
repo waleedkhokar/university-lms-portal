@@ -23,8 +23,8 @@
 
 | | | |
 |---|---|---|
-| ![lms](./public/lms.PNG) | ![lms2](./public/lms2.PNG) | ![lms3](./public/lms3.PNG) |
-| **Login** | **Student Details** | **Details** |
+| ![lms](./public/lms.PNG) | ![lms2](./public/lms2.PNG) | ![lms3](./public/lms3.PNG) || ![lms3](./public/lms4.PNG) |
+| **Login** | **Student Details** | **Details** || **Details** |
 
 ---
 
@@ -52,22 +52,29 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 👨‍💻 About the Developer
+## 👨‍💻 Developer
 
-### **Waleed Khokhar**
+### Waleed Khokhar
 
-> **Full-Stack Engineer | MERN Stack | Python & FastAPI | TypeScript**
+**Full-Stack Developer (Web + App) & AI Engineer**
 
-I build scalable, production-ready web applications using **Next.js, React, Node.js, Python/FastAPI, TypeScript/JavaScript**, and both **SQL & NoSQL** databases — with **Docker** for containerization.
+Full-Stack Developer with 1+ year of experience building scalable web apps (Next.js, Node.js, FastAPI), cross-platform mobile apps (React Native), and intelligent AI solutions (Agentic AI, LLM, RAG, LangChain).
 
-**🌐 Connect with me:**
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/waleedkhokhar)
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/waleedkhokar)
-[![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://waledkhokar.vercel.app/)
-[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:waleedkhokharbusiness@gmail.com)
+My current focus is on:
+**Machine Learning · Deep Learning · Generative AI · LLMs · RAG · AI Agents · AI-powered Applications**
 
 ---
+
+## 📫 Connect With Me
+
+<div align="center">
+
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/waleedkhokhar)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/waleedkhokhar)
+[![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://waledkhokar.vercel.app)
+[![Email](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:waleedkhokharbusiness@gmail.com)
+
+</div>
 
 > **وَقُل رَّبِّ زِدْنِي عِلْمًا**
 >
