@@ -69,6 +69,24 @@ const sgpaTrend = [
   { semester: "Sem 7", sgpa: 2.70 },
 ];
 
+// Proper line icons for the sidebar, like the preview overview — no emojis.
+function SidebarIcon({ name }) {
+  const paths = {
+    dashboard: (<><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></>),
+    profile: (<><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6" /></>),
+    current: (<><path d="M12 6c-2-1.5-5-2-8-2v16c3 0 6 .5 8 2 2-1.5 5-2 8-2V4c-3 0-6 .5-8 2z" /><path d="M12 6v16" /></>),
+    history: (<><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></>),
+    attendance: (<><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M8 3v4M16 3v4M3 10h18M9 16l2 2 4-4" /></>),
+    grand: (<><path d="M3 21h18" /><path d="M6 21V11M11 21V6M16 21v-9M21 21v-5" /></>),
+    logout: (<><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><path d="M16 17l5-5-5-5M21 12H9" /></>),
+  };
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="shrink-0">
+      {paths[name]}
+    </svg>
+  );
+}
+
 export default function Dashboard() {
   const router = useRouter();
   const [student, setStudent] = useState(null);
@@ -134,9 +152,13 @@ export default function Dashboard() {
               onClick={() => setSidebarOpen(!sidebarOpen)}
               aria-label={sidebarOpen ? "Close menu" : "Open menu"}
               aria-expanded={sidebarOpen}
-              className="lg:hidden w-11 h-11 flex items-center justify-center rounded-lg bg-white/20 text-white text-2xl font-bold shrink-0"
+              className="lg:hidden w-11 h-11 flex items-center justify-center rounded-lg bg-white/20 text-white shrink-0"
             >
-              {sidebarOpen ? "×" : "☰"}
+              {sidebarOpen ? (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" /></svg>
+              ) : (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+              )}
             </button>
             <Image
               src="/miu-logo.png"
@@ -145,7 +167,10 @@ export default function Dashboard() {
               height={40}
               className="rounded shrink-0"
             />
-            <h1 className="font-bold text-base sm:text-xl leading-tight"><span className="sm:hidden">MIU LMS</span><span className="hidden sm:inline">MIU Learning Management System</span></h1>
+            <div className="leading-tight">
+              <h1 className="font-bold text-base sm:text-xl"><span className="sm:hidden">MIU LMS</span><span className="hidden sm:inline">MIU Learning Management System</span></h1>
+              <p className="hidden sm:block text-xs text-white/80 mt-0.5">Mohi-ud-Din Islamic University</p>
+            </div>
           </div>
           <div className="flex items-center space-x-4">
             <div className="relative">
@@ -177,30 +202,30 @@ export default function Dashboard() {
                 type="button"
                 onClick={() => setSidebarOpen(false)}
                 aria-label="Close menu"
-                className="w-11 h-11 flex items-center justify-center rounded-lg bg-gray-100 text-gray-900 text-2xl font-bold"
+                className="w-11 h-11 flex items-center justify-center rounded-lg bg-gray-100 text-gray-900"
               >
-                ×
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" /></svg>
               </button>
             </div>
             <ul className="space-y-1">
             {[
-  { tab: 'dashboard', label: 'Dashboard', icon: '🏠' },
-  { tab: 'profile', label: 'My Profile', icon: '👤' },
-  { tab: 'current', label: 'Current Courses', icon: '📚' },
-  { tab: 'history', label: 'Academic History', icon: '📝' },
-  { tab: 'attendance', label: 'Attendance', icon: '✅' },
+  { tab: 'dashboard', label: 'Dashboard', icon: 'dashboard' },
+  { tab: 'profile', label: 'My Profile', icon: 'profile' },
+  { tab: 'current', label: 'Current Courses', icon: 'current' },
+  { tab: 'history', label: 'Academic History', icon: 'history' },
+  { tab: 'attendance', label: 'Attendance', icon: 'attendance' },
 ].map(({ tab, label, icon }) => (
   <li key={tab}>
     <button
       onClick={() => { setActiveTab(tab); setSidebarOpen(false); }}
       className={`w-full text-left flex items-center space-x-3 p-3 rounded-lg font-sans ${
-        activeTab === tab 
-          ? 'bg-emerald-100 text-emerald-800 font-medium' 
+        activeTab === tab
+          ? 'text-white font-medium'
           : 'hover:bg-gray-100 text-gray-900'
       }`}
-      style={{ fontSize: '1rem' }}  // Matches typical base font size
+      style={activeTab === tab ? { fontSize: '1rem', backgroundColor: '#007B66' } : { fontSize: '1rem' }}
     >
-      <span>{icon}</span>
+      <SidebarIcon name={icon} />
       <span>{label}</span>
     </button>
   </li>
@@ -211,11 +236,11 @@ export default function Dashboard() {
   <button
     onClick={() => { setSidebarOpen(false); router.push('/GradeReport'); }}
     className={`w-full text-left flex items-center space-x-3 p-3 rounded-lg font-sans ${
-      activeTab === 'grand-report' ? 'bg-emerald-100 text-emerald-800 font-medium' : 'hover:bg-gray-100 text-gray-900'
+      activeTab === 'grand-report' ? 'text-white font-medium' : 'hover:bg-gray-100 text-gray-900'
     }`}
-    style={{ fontSize: '1rem' }}
+    style={activeTab === 'grand-report' ? { fontSize: '1rem', backgroundColor: '#007B66' } : { fontSize: '1rem' }}
   >
-    <span>📊</span>
+    <SidebarIcon name="grand" />
     <span>Grand Report</span>
   </button>
 </li>
@@ -232,7 +257,7 @@ export default function Dashboard() {
     className="w-full text-left flex items-center space-x-3 p-3 hover:bg-gray-100 rounded-lg text-red-600 font-sans"
     style={{ fontSize: '1rem' }}
   >
-    <span>🚪</span>
+    <SidebarIcon name="logout" />
     <span>Logout</span>
   </button>
 </li>
@@ -242,33 +267,33 @@ export default function Dashboard() {
         </aside>
 
         {/* Dashboard Content */}
-        <main className="flex-1">
+        <main className="flex-1 min-w-0">
 {activeTab === 'dashboard' && (
   <div className="space-y-6">
     <div>
       <h2 className="text-2xl font-bold text-gray-900">Dashboard</h2>
-      <p className="text-sm text-gray-500 mt-1">Welcome back, {student.name} — {student.currentSemester}, {student.program}</p>
+      <p className="text-sm text-gray-500 mt-1">Welcome back, {student.name}. Here is your current progress at a glance.</p>
     </div>
 
     {/* Stat cards — all numbers from the portal's own data */}
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       <div className="bg-white rounded-xl shadow-md p-5">
-        <p className="text-sm text-gray-500">CGPA</p>
+        <p className="text-xs font-semibold tracking-wider text-gray-500 uppercase">CGPA</p>
         <p className="text-3xl font-bold text-gray-900 mt-1">{student.cgpa}</p>
-        <p className="text-xs text-gray-400 mt-1">From Grade Report</p>
+        <p className="text-xs text-gray-400 mt-1">Cumulative GPA</p>
       </div>
       <div className="bg-white rounded-xl shadow-md p-5">
-        <p className="text-sm text-gray-500">Credit Hours Completed</p>
+        <p className="text-xs font-semibold tracking-wider text-gray-500 uppercase">Credit Hours Completed</p>
         <p className="text-3xl font-bold text-gray-900 mt-1">125 <span className="text-base font-medium text-gray-400">/ 128</span></p>
-        <p className="text-xs text-gray-400 mt-1">From Grade Report</p>
+        <p className="text-xs text-gray-400 mt-1">3 hours remaining</p>
       </div>
       <div className="bg-white rounded-xl shadow-md p-5">
-        <p className="text-sm text-gray-500">Courses Passed</p>
+        <p className="text-xs font-semibold tracking-wider text-gray-500 uppercase">Courses Passed</p>
         <p className="text-3xl font-bold text-gray-900 mt-1">{passedCourses.length} <span className="text-base font-medium text-gray-400">/ {courses.length}</span></p>
-        <p className="text-xs text-gray-400 mt-1">Academic History</p>
+        <p className="text-xs text-gray-400 mt-1">Total courses</p>
       </div>
       <div className="bg-white rounded-xl shadow-md p-5">
-        <p className="text-sm text-gray-500">Current Courses</p>
+        <p className="text-xs font-semibold tracking-wider text-gray-500 uppercase">Current Courses</p>
         <p className="text-3xl font-bold text-gray-900 mt-1">{currentCourses.length}</p>
         <p className="text-xs text-gray-400 mt-1">{student.currentSemester}</p>
       </div>
@@ -280,11 +305,11 @@ export default function Dashboard() {
         <h3 className="text-lg font-semibold text-gray-900">Degree Progress</h3>
         <p className="text-sm text-gray-500 mt-1">125 of 128 credit hours completed · Semester 8 in progress, 7 semesters completed</p>
         <div className="mt-4 w-full bg-gray-200 rounded-full h-3"><div className="h-3 rounded-full" style={{ width: '98%', backgroundColor: '#007B66' }} /></div>
-        <p className="text-sm font-semibold text-gray-900 mt-2">98% complete</p>
+        <div className="mt-2 flex items-center justify-between text-sm"><span className="text-gray-600">125 / 128 credit hours</span><span className="font-semibold text-gray-900">98% complete</span></div>
       </div>
       <div className="bg-white rounded-xl shadow-md p-5">
         <h3 className="text-lg font-semibold text-gray-900">Grade Distribution</h3>
-        <p className="text-xs text-gray-500 mt-1">41 graded courses, Semesters 1 to 7, from the Grade Report</p>
+        <p className="text-xs text-gray-500 mt-1">41 graded courses · Semesters 1 to 7</p>
         <div className="mt-4 space-y-2">
           {[['A', 10], ['B', 10], ['C', 9], ['C+', 2], ['D', 10]].map(([grade, count]) => (
             <div key={grade} className="flex items-center gap-3 text-sm">
@@ -301,7 +326,7 @@ export default function Dashboard() {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <div className="bg-white rounded-xl shadow-md p-5 lg:col-span-2">
         <h3 className="text-lg font-semibold text-gray-900">SGPA by Semester</h3>
-        <p className="text-xs text-gray-500 mt-1">Semesters 1 to 7, from the Grade Report</p>
+        <p className="text-xs text-gray-500 mt-1">Semester 1 to Semester 7</p>
         <div className="mt-6 flex items-end gap-2 sm:gap-3 h-44">
           {sgpaTrend.map((item) => (
             <div key={item.semester} className="flex-1 flex flex-col items-center justify-end h-full">
@@ -315,20 +340,20 @@ export default function Dashboard() {
 
       <div className="bg-white rounded-xl shadow-md p-5">
         <h3 className="text-lg font-semibold text-gray-900">Course Status</h3>
-        <p className="text-xs text-gray-500 mt-1">All {courses.length} courses in Academic History</p>
+        <p className="text-xs text-gray-500 mt-1">All {courses.length} courses</p>
         <div className="mt-5 flex items-center justify-center">
           <svg width="150" height="150" viewBox="0 0 160 160" role="img" aria-label="Course status chart">
             <circle cx="80" cy="80" r="62" fill="none" stroke="#e5e7eb" strokeWidth="18" />
             <circle cx="80" cy="80" r="62" fill="none" stroke="#007B66" strokeWidth="18" strokeDasharray={`${(passedCourses.length / courses.length) * 389.6} 389.6`} transform="rotate(-90 80 80)" />
             <circle cx="80" cy="80" r="62" fill="none" stroke="#f59e0b" strokeWidth="18" strokeDasharray={`${(currentCourses.length / courses.length) * 389.6} 389.6`} strokeDashoffset={`${-1 * (passedCourses.length / courses.length) * 389.6}`} transform="rotate(-90 80 80)" />
-            <text x="80" y="76" textAnchor="middle" fontSize="22" fontWeight="700" fill="#111827">{passedCourses.length}</text>
-            <text x="80" y="96" textAnchor="middle" fontSize="11" fill="#6b7280">Passed</text>
+            <text x="80" y="76" textAnchor="middle" fontSize="22" fontWeight="700" fill="#111827">{courses.length}</text>
+            <text x="80" y="96" textAnchor="middle" fontSize="11" fill="#6b7280">courses</text>
           </svg>
         </div>
         <div className="mt-4 space-y-2 text-sm">
-          <p className="flex justify-between"><span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full inline-block" style={{ backgroundColor: '#007B66' }} /> Passed</span><span className="font-semibold">{passedCourses.length}</span></p>
-          <p className="flex justify-between"><span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full inline-block bg-amber-500" /> Enrolled</span><span className="font-semibold">{currentCourses.length}</span></p>
-          <p className="flex justify-between"><span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full inline-block bg-red-400" /> Failed</span><span className="font-semibold">{failedCourses.length}</span></p>
+          <p className="flex items-center gap-2"><span className="w-3 h-3 rounded-full inline-block shrink-0" style={{ backgroundColor: '#007B66' }} /> Passed — <span className="font-semibold">{passedCourses.length}</span></p>
+          <p className="flex items-center gap-2"><span className="w-3 h-3 rounded-full inline-block shrink-0 bg-amber-500" /> Enrolled — <span className="font-semibold">{currentCourses.length}</span></p>
+          <p className="flex items-center gap-2"><span className="w-3 h-3 rounded-full inline-block shrink-0 bg-red-400" /> Failed — <span className="font-semibold">{failedCourses.length}</span></p>
         </div>
       </div>
     </div>
@@ -620,6 +645,9 @@ export default function Dashboard() {
         <button onClick={() => setHistoryFilter('Failed')} className={`px-3 py-1 rounded-full text-sm ${historyFilter === 'Failed' ? 'bg-red-600 text-white' : 'bg-red-100 text-red-800'}`}>
           Failed ({failedCourses.length})
         </button>
+        <button onClick={() => setHistoryFilter('Enrolled')} className={`px-3 py-1 rounded-full text-sm ${historyFilter === 'Enrolled' ? 'bg-amber-600 text-white' : 'bg-amber-100 text-amber-800'}`}>
+          Enrolled ({currentCourses.length})
+        </button>
       </div>
 
       {/* Mobile Cards View */}
@@ -706,7 +734,7 @@ export default function Dashboard() {
           {/* Attendance Tab */}
           {activeTab === 'attendance' && (
             <div className="bg-white rounded-xl shadow-md overflow-hidden mb-6">
-             <div className="p-4 text-black" style={{ backgroundColor: '#007B66' }}>
+             <div className="p-4 text-white" style={{ backgroundColor: '#007B66' }}>
 
                 <h2 className="text-xl font-semibold">Attendance Summary</h2>
               </div>

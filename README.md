@@ -23,7 +23,7 @@
 
 | | | |
 |---|---|---|
-| ![lms](./public/lms.PNG) | ![lms2](./public/lms2.PNG) | ![lms3](./public/lms3.PNG) || ![lms3](./public/lms4.PNG) |
+| ![lms](./public/lms.png) | ![lms2](./public/lms2.pngg) | ![lms3](./public/lms3.png) || ![lms3](./public/lms4.PNG) |
 | **Login** | **Student Details** | **Details** || **Details** |
 
 ---

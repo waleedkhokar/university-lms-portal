@@ -1,4 +1,25 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
+import Head from "next/head";
 import Image from "next/image";
+
+// Same proper line icons as the dashboard sidebar — no emojis.
+function SidebarIcon({ name }) {
+  const paths = {
+    dashboard: (<><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></>),
+    profile: (<><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6" /></>),
+    current: (<><path d="M12 6c-2-1.5-5-2-8-2v16c3 0 6 .5 8 2 2-1.5 5-2 8-2V4c-3 0-6 .5-8 2z" /><path d="M12 6v16" /></>),
+    history: (<><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></>),
+    attendance: (<><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M8 3v4M16 3v4M3 10h18M9 16l2 2 4-4" /></>),
+    grand: (<><path d="M3 21h18" /><path d="M6 21V11M11 21V6M16 21v-9M21 21v-5" /></>),
+    logout: (<><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><path d="M16 17l5-5-5-5M21 12H9" /></>),
+  };
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="shrink-0">
+      {paths[name]}
+    </svg>
+  );
+}
 
 // Updated semester 7 courses GP for your requirement
 const semesters = [
@@ -123,10 +144,106 @@ const semesters = [
 ];
 
 export default function GrandReport() {
+  const router = useRouter();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const goTab = (tab) => { setSidebarOpen(false); router.push(`/dashboard?tab=${tab}`); };
+  const sidebarItems = [
+    { label: "Dashboard", icon: "dashboard", onClick: () => goTab("dashboard") },
+    { label: "My Profile", icon: "profile", onClick: () => goTab("profile") },
+    { label: "Current Courses", icon: "current", onClick: () => goTab("current") },
+    { label: "Academic History", icon: "history", onClick: () => goTab("history") },
+    { label: "Attendance", icon: "attendance", onClick: () => goTab("attendance") },
+  ];
   return (
-    <div className="max-w-7xl mx-auto p-6 bg-white rounded-xl my-10 font-sans text-gray-900 shadow-lg">
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap gap-2">
+    <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
+      <Head>
+        <title>Grand Report | MIU LMS</title>
+      </Head>
+
+      {/* MIU LMS header + sidebar, same as the dashboard — hidden when printing */}
+      <header className="text-white shadow-lg print:hidden" style={{ backgroundColor: '#007B66' }}>
+        <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              aria-label={sidebarOpen ? "Close menu" : "Open menu"}
+              aria-expanded={sidebarOpen}
+              className="lg:hidden w-11 h-11 flex items-center justify-center rounded-lg bg-white/20 text-white shrink-0"
+            >
+              {sidebarOpen ? (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" /></svg>
+              ) : (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+              )}
+            </button>
+            <Image src="/miu-logo.png" alt="University Logo" width={40} height={40} className="rounded shrink-0" />
+            <div className="leading-tight">
+              <h1 className="font-bold text-base sm:text-xl"><span className="sm:hidden">MIU LMS</span><span className="hidden sm:inline">MIU Learning Management System</span></h1>
+              <p className="hidden sm:block text-xs text-white/80 mt-0.5">Mohi-ud-Din Islamic University</p>
+            </div>
+          </div>
+          <div className="flex items-center space-x-4">
+            <div className="relative">
+              <Image src="/student.jpg" alt="Student" width={40} height={40} className="rounded-full border-2 border-white" />
+              <span className="absolute -bottom-1 -right-1 bg-green-500 rounded-full w-3 h-3"></span>
+            </div>
+            <div className="hidden sm:block">
+              <p className="font-medium">Waleed Khokhar</p>
+              <p className="text-xs text-blue-100">22-APH-27426</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div className="container mx-auto px-4 py-6 flex flex-col lg:flex-row gap-6">
+        <aside className={`bg-white rounded-xl shadow-md p-4 h-fit lg:sticky lg:top-6 lg:w-64 print:hidden ${sidebarOpen ? "block" : "hidden"} lg:block`}>
+          <nav>
+            <div className="flex items-center justify-between mb-3 lg:hidden">
+              <span className="font-semibold text-gray-900">Menu</span>
+              <button type="button" onClick={() => setSidebarOpen(false)} aria-label="Close menu" className="w-11 h-11 flex items-center justify-center rounded-lg bg-gray-100 text-gray-900">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" /></svg>
+              </button>
+            </div>
+            <ul className="space-y-1">
+              {sidebarItems.map(({ label, icon, onClick }) => (
+                <li key={label}>
+                  <button onClick={onClick} className="w-full text-left flex items-center space-x-3 p-3 rounded-lg font-sans hover:bg-gray-100 text-gray-900" style={{ fontSize: '1rem' }}>
+                    <SidebarIcon name={icon} />
+                    <span>{label}</span>
+                  </button>
+                </li>
+              ))}
+              <li>
+                <button className="w-full text-left flex items-center space-x-3 p-3 rounded-lg font-sans text-white font-medium" style={{ fontSize: '1rem', backgroundColor: '#007B66' }}>
+                  <SidebarIcon name="grand" />
+                  <span>Grand Report</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => { setSidebarOpen(false); localStorage.removeItem('loggedIn'); localStorage.removeItem('student'); router.push('/'); }}
+                  className="w-full text-left flex items-center space-x-3 p-3 hover:bg-gray-100 rounded-lg text-red-600 font-sans"
+                  style={{ fontSize: '1rem' }}
+                >
+                  <SidebarIcon name="logout" />
+                  <span>Logout</span>
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </aside>
+
+        <main className="flex-1 min-w-0">
+          <div className="mb-6 print:hidden">
+            <h2 className="text-2xl font-bold text-gray-900">Grand Report</h2>
+            <p className="text-sm text-gray-500 mt-1">Full grade report, as issued by the university.</p>
+          </div>
+
+    <div className="w-full p-4 sm:p-6 bg-white rounded-xl font-sans text-gray-900 shadow-lg">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3 print:hidden">
+        <div className="flex flex-wrap gap-2 items-center">
+          <span className="text-sm font-semibold text-gray-700">Jump to:</span>
           {[1, 2, 3, 4, 5, 6, 7].map((n) => (
             <a key={n} href={`#sem-${n}`} className="px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-sm hover:bg-gray-200">Sem {n}</a>
           ))}
@@ -172,7 +289,8 @@ export default function GrandReport() {
         <section key={i} id={`sem-${i + 1}`} className="mb-12">
           <h2 className="text-2xl font-semibold mb-2">{title} <span className="text-gray-600 text-sm font-normal">{dateRange}</span> <span className="ml-3 text-gray-700 font-normal">{semesterNumber}</span></h2>
 
-          <table className="w-full border-collapse border border-gray-300 text-base">
+          <div className="overflow-x-auto">
+          <table className="w-full min-w-[560px] border-collapse border border-gray-300 text-base">
             <thead className="bg-blue-100">
               <tr>
                 <th className="border border-gray-300 px-3 py-2 text-left">Code</th>
@@ -206,6 +324,7 @@ export default function GrandReport() {
               </tr>
             </tfoot>
           </table>
+          </div>
         </section>
       ))}
 
@@ -220,6 +339,9 @@ export default function GrandReport() {
         
         </p>
       </section>
+    </div>
+        </main>
+      </div>
     </div>
   );
 }
